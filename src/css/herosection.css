@@ -10,7 +10,7 @@
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    margin-top: 66px;
+    margin-top: 2px;
 }
 .hero-text {
     display: flex;
@@ -45,7 +45,7 @@
         flex-direction: row;
         justify-content: space-between;
         gap: 2rem;
-
+        margin-top: 66px;
     }
     .hero-image {
         flex: 1;

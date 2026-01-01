@@ -10,9 +10,9 @@
         text-align: left;
     }
     .others-container {
-        margin-block: 5rem;
+        margin: 5rem auto;
         height: 250px;
-        width: 100%;
+        width: 85%;
         position: relative;
     }
     .others-pictures {
