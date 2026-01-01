@@ -1,0 +1,21 @@
+#root {
+  /* max-width: 1280px; */
+  margin: 0 auto;
+  padding: 0 8px;
+  text-align: center;
+}
+
+@media (width > 744px) {
+  #root {
+    padding: 0 2rem;
+  }
+}
+@media (width > 1280px) {
+  #root {
+    padding: 0 10rem;
+  }
+}
+
+/* .App {
+  background-color: red;
+} */
