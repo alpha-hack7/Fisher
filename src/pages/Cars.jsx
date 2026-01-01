@@ -1,6 +1,6 @@
 import "../css/cars.css"
 import { Link } from "react-router-dom";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import car_01 from "../assets/advertisements/vid_001.mp4";
 import car_02 from "../assets/advertisements/vid_002.mp4";
 import car_03 from "../assets/advertisements/vid_003.mp4";
@@ -71,24 +71,66 @@ const cars = [
 const Car = ({ car_image, car_vid, car_name, car_description }) => {
     const videoRef = useRef(null);
     const [isPlaying, setIsPlaying] = useState(false);
-
-    const handlePlay = () => {
-        setIsPlaying(true);
-    }   
-    const handlePause = () => {
-        setIsPlaying(false);
-    }
+    const [isFullscreen, setFullScreen] = useState(false);
+    
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+    
+    // Hovering In (ON MOUSE ENTER)
     const showControls = () => {
-        videoRef.current.play();
-        videoRef.current.controls = true;
-        videoRef.current.style.cursor = "pointer";
+        const video = videoRef.current;
+        if (video){
+            video.play();
+            video.style.cursor = "pointer";
+        }
     }
+    //Hovering Out (ON MOUSE LEAVE)
     const hideControls = () => {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
-        videoRef.current.controls = false;
-        videoRef.current.style.cursor = "default";
+        const video = videoRef.current;
+        if (video){
+            video.pause();
+            video.currentTime = 0;
+            video.style.cursor = "default";
+        }
     }
+    //Clicking the thumbnail of the video to open fullscreen
+    const handleFullScreen = () => {
+        const video = videoRef.current;
+        if (!isFullscreen && video) {
+            if (video.requestFullscreen){
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            } else if (video.mozRequestFullscreen) {
+                video.mozRequestFullscreen();
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen();
+            }
+            setFullScreen(true);
+            video.muted = false;
+            video.currentTime = 0;
+            video.style.objectFit = "contain";
+        }
+    }
+    // Exiting fullscreen and resetting to defaults
+    useEffect(() => {
+        const handleFullscreenChange = () => {
+            const video = videoRef.current;
+            if (!document.fullscreenElement) {
+                if (video) {
+                    video.muted = true;
+                    video.style.objectFit = "cover";
+                }
+                setFullScreen(false);
+            }
+        };
+
+        document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+        return () => {
+            document.removeEventListener("fullscreenchange", handleFullscreenChange);
+        };
+    },[]);
 
     return (
         <div className="car" onMouseEnter={showControls} onMouseLeave={hideControls}>
@@ -104,9 +146,9 @@ const Car = ({ car_image, car_vid, car_name, car_description }) => {
             cursor: "pointer",
             zIndex: 2,
         }} 
-        onClick={() => videoRef.current.play()}/>
+        />
         )}
-            <video poster={car_image} src={car_vid} muted ref={videoRef} onPlay={handlePlay} onPause={handlePause}>
+            <video onClick={handleFullScreen} poster={car_image} src={car_vid} muted ref={videoRef} onPlay={handlePlay} onPause={handlePause}>
             </video>
             <div className="car-info">
                 <h3>{car_name}</h3>
