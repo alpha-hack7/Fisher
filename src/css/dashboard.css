@@ -1,0 +1,15 @@
+.dashboard {
+  display: flex;
+  gap: 1rem;
+  overflow: hidden;
+}
+.dashboard-main {
+  flex: 1;
+  padding: 1rem;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+}
