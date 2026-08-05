@@ -45,7 +45,7 @@ export const New_Category_Dialog = ({ dialog_ref, setOpen }) => {
   return (
     <dialog ref={dialog_ref} id="new-category">
       <p>Enter name of Category:</p>
-      <input type="text" />
+      <input type="text" name="new-category" />
       <div>
         <button type="submit">Save</button>
         <button
