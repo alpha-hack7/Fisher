@@ -9,10 +9,15 @@ body[spacing="dashboard"] {
 .dashboard-main {
   flex: 1;
   padding: 1rem;
-}
-main {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   text-align: left;
+  position: static;
+}
+@media (width < 700px) {
+  .dashboard-main {
+    position: fixed;
+    left: 55px;
+  }
 }
